@@ -71,7 +71,7 @@ function comenzarJuego() {
 	
 	// Arrancar el conteo de tiempo
 	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
-
+	arrancarTiempo();
 } // comenzarJuego
 
 
@@ -165,3 +165,6 @@ function decContador(contador){
 function setContador(contador, valor) {
 	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 } // setContador
+
+
+comenzarJuego();
