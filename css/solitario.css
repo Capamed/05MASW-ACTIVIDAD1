@@ -68,3 +68,8 @@ div.tapete.receptor{
 div.central{
 	text-align: center;
 }
+
+img.cartas-contendor-inicial{
+	height: 70px;
+	position: absolute;
+}
