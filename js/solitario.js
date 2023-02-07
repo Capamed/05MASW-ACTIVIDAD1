@@ -11,7 +11,8 @@ let numeros = [9, 10, 11, 12];
 let paso = 5;
 
 // Tapetes		
-let tapete = "";	
+let tapete = "";
+let tapete_eventos = [];	
 let tapeteInicial = document.getElementById("inicial");
 let tapeteSobrantes = document.getElementById("sobrantes");
 let tapeteReceptor1 = document.getElementById("receptor1");
@@ -56,13 +57,11 @@ var contador_movimientos = 0;
 
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
-
 // Rutina asociada a boton reset
 /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 function reset() {
 	window.location.reload()
 }
-
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
@@ -151,7 +150,6 @@ function arrancarTiempo() {
 
 } // arrancarTiempo
 
-
 /**
 	Si mazo es un array de elementos <img>, en esta rutina debe ser
 	reordenado aleatoriamente. Al ser un array un objeto, se pasa
@@ -171,8 +169,6 @@ function barajar(mazo) {
 	return mazo;
 } // barajar
 
-
-
 /**
 	  En el elemento HTML que representa el tapete inicial (variable tapeteInicial)
 	se deben añadir como hijos todos los elementos <img> del array mazo.
@@ -186,7 +182,6 @@ function cargarTapeteInicial(mazo) {
 	let posicionInicialLeft = 10;
 	for (let i = 0; i < mazo.length; i++) {
 		let img_carta = mazo[i];
-		//img_carta.setAttribute("id",`${img_carta.getAttribute("dato-numero")}-${img_carta.getAttribute("dato-palo")}`);
 		img_carta.style.top = `${posicionInicialTop + i * paso}px`;
 		img_carta.style.left = `${posicionInicialLeft + i * paso}px`;
 		img_carta.style.height = "70px";
@@ -211,9 +206,6 @@ function cargarTapeteInicial(mazo) {
 			event.dataTransfer.clearData("Data");
 		});
 	}
-
-
-
 } // cargarTapeteInicial
 
 
@@ -263,7 +255,7 @@ function controlCartasToShow (numero_carta,contador_receptor,control_palo_recep,
 			control_palo_recep = palo_carta;
 		}
 	}
-	return mostrar_tapete;
+	return [mostrar_tapete, control_palo_recep];
 }
 
 /**
@@ -301,8 +293,7 @@ function dragover(event) {
 
 function dragenter(event){
 	event.target.style.border = '2px dotted #555'; 
-	tapete = event.target.id;
-	console.log(tapete);
+	tapete_eventos.push(event.target.id);
 }
 
 function dragleave(event){
@@ -320,7 +311,14 @@ function drop(event) {
 	var palo_carta = carta.getAttribute("dato-palo");
 	var tapete_encuentra = carta.getAttribute("dato-tapete");
 
-	
+	var numero = 0;
+	var i = tapete_eventos.length-1;
+	while (numero >= 0){
+		numero = tapete_eventos[i].substring(0,1);
+		tapete = tapete_eventos[i];
+		i--;
+	}
+
 	contador_inicial = parseInt(contInicial.innerText,10);
 	contador_sobrantes = parseInt(contSobrantes.innerText,10);
 	contador_receptor1 = parseInt(contReceptor1.innerText,10);
@@ -341,8 +339,10 @@ function drop(event) {
 
 	if (tapete=="receptor1") {
 		let mostrar_tapete = false;
-		
-		mostrar_tapete = controlCartasToShow (numero_carta,contador_receptor1,control_palo_recep1,palo_carta);
+
+		var temArray =  controlCartasToShow (numero_carta,contador_receptor1,control_palo_recep1,palo_carta);
+		mostrar_tapete = temArray[0];
+		control_palo_recep1 = temArray[1];
 
 		if (mostrar_tapete != false) {
 			contador_receptor1 = showOnTapete (tapeteReceptor1,mazoReceptor1,carta,false,"receptor1",tapete_encuentra,contador_receptor1);
@@ -352,7 +352,9 @@ function drop(event) {
 	if (tapete=="receptor2") {
 		let mostrar_tapete = false;
 		
-		mostrar_tapete = controlCartasToShow (numero_carta,contador_receptor2,control_palo_recep2,palo_carta);
+		var temArray =  controlCartasToShow (numero_carta,contador_receptor2,control_palo_recep2,palo_carta);
+		mostrar_tapete = temArray[0];
+		control_palo_recep2 = temArray[1];
 
 		if (mostrar_tapete != false) {
 			contador_receptor2 = showOnTapete (tapeteReceptor2,mazoReceptor2,carta,false,"receptor2",tapete_encuentra,contador_receptor2);
@@ -362,7 +364,9 @@ function drop(event) {
 	if (tapete=="receptor3") {
 		let mostrar_tapete = false;
 
-		mostrar_tapete = controlCartasToShow (numero_carta,contador_receptor3,control_palo_recep3,palo_carta);
+		var temArray =  controlCartasToShow (numero_carta,contador_receptor3,control_palo_recep3,palo_carta);
+		mostrar_tapete = temArray[0];
+		control_palo_recep3 = temArray[1];
 
 		if (mostrar_tapete != false) {
 			contador_receptor3 = showOnTapete (tapeteReceptor3,mazoReceptor3,carta,false,"receptor3",tapete_encuentra,contador_receptor3);
@@ -372,7 +376,9 @@ function drop(event) {
 	if (tapete=="receptor4") {
 		let mostrar_tapete = false;
 		
-		mostrar_tapete = controlCartasToShow (numero_carta,contador_receptor4,control_palo_recep4,palo_carta);
+		var temArray =  controlCartasToShow (numero_carta,contador_receptor4,control_palo_recep4,palo_carta);
+		mostrar_tapete = temArray[0];
+		control_palo_recep4 = temArray[1];
 
 		if (mostrar_tapete != false) {
 			contador_receptor4 = showOnTapete (tapeteReceptor4,mazoReceptor4,carta,false,"receptor4",tapete_encuentra,contador_receptor4);
@@ -380,7 +386,6 @@ function drop(event) {
 	}
 
 	if (contador_inicial==0) {
-		//tapeteSobrantes.removeChild(carta);
 		cargarTapeteInicial(barajar(mazoSobrantes));
 		contador_inicial = mazoSobrantes.length;
 		contador_sobrantes = 0;
@@ -398,8 +403,8 @@ function drop(event) {
 	
 	} 
 	
+	tapete_eventos = [];
 
-	//carta.setAttribute("id",tapete);
 	setContador(contInicial, contador_inicial);
 	setContador(contSobrantes, contador_sobrantes);
 	setContador(contReceptor1, contador_receptor1);
