@@ -203,7 +203,7 @@ function cargarTapeteInicial(mazo) {
 		  
 		img_carta.addEventListener("dragend", (event) => {
 			event.target.style.opacity = '';
-			event.dataTransfer.clearData("Data");
+			event.dataTransfer.clearData("text");
 		});
 	}
 } // cargarTapeteInicial
