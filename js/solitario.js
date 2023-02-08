@@ -393,7 +393,7 @@ function drop(event) {
 	}
 
 	if ((contador_sobrantes==0)&&(contador_inicial==0)) {
-		let text = `Felicidades!! Has ganado la partida en ${contTiempo.innerText} segundos y ${contador_movimientos} movimientos. Quieres volver a jugar?`;;
+		let text = `Felicidades!! Has ganado la partida en ${contTiempo.innerText} segundos y ${contador_movimientos} movimientos. Quieres volver a jugar?`;
 		if (confirm(text) == true) {
 			text = "You pressed OK!";
 			reset()
