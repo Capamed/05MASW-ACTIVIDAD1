@@ -3,9 +3,9 @@
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
-let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-//let numeros = [9, 10, 11, 12];
+let numeros = [9, 10, 11, 12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -189,8 +189,6 @@ function cargarTapeteInicial(mazo) {
 		img_carta.setAttribute("dato-tapete", "inicial");
 		img_carta.setAttribute('draggable', false);
 		tapeteInicial.appendChild(img_carta);
-
-		console.log(mazo.length-1);
 		if (i==(mazo.length-1)){
 			img_carta.setAttribute('draggable', true);
 		}
@@ -410,8 +408,6 @@ function drop(event) {
 	
 	} 
 	
-	tapete_eventos = [];
-
 	setContador(contInicial, contador_inicial);
 	setContador(contSobrantes, contador_sobrantes);
 	setContador(contReceptor1, contador_receptor1);
@@ -420,6 +416,6 @@ function drop(event) {
 	setContador(contReceptor4, contador_receptor4);
 	setContador(contMovimientos, contador_movimientos);
 
-	console.log(mazoInicial)
+	tapete_eventos = [];
 	cargarTapeteInicial(mazoInicial);
 }
