@@ -187,8 +187,13 @@ function cargarTapeteInicial(mazo) {
 		img_carta.style.height = "70px";
 		img_carta.style.position = "absolute";
 		img_carta.setAttribute("dato-tapete", "inicial");
-		img_carta.setAttribute('draggable', true);
+		img_carta.setAttribute('draggable', false);
 		tapeteInicial.appendChild(img_carta);
+
+		console.log(mazo.length-1);
+		if (i==(mazo.length-1)){
+			img_carta.setAttribute('draggable', true);
+		}
 
 		img_carta.addEventListener("drag", () => {
 			console.log("dragging");
@@ -271,6 +276,7 @@ function showOnTapete(tapeteReceptor,mazoReceptor,carta,setdrag,datotapete,tapet
 
 	if (tapete_encuentra=="inicial"){
 		contador_inicial=decContador(contador_inicial);
+		mazoInicial.pop(carta);
 	} 
 	if (tapete_encuentra=="sobrantes"){
 		contador_sobrantes=decContador(contador_sobrantes);
@@ -386,8 +392,9 @@ function drop(event) {
 	}
 
 	if (contador_inicial==0) {
-		cargarTapeteInicial(barajar(mazoSobrantes));
-		contador_inicial = mazoSobrantes.length;
+		mazoInicial=mazoSobrantes;
+		cargarTapeteInicial(barajar(mazoInicial));
+		contador_inicial = mazoInicial.length;
 		contador_sobrantes = 0;
 		mazoSobrantes=[];
 	}
@@ -412,4 +419,7 @@ function drop(event) {
 	setContador(contReceptor3, contador_receptor3);
 	setContador(contReceptor4, contador_receptor4);
 	setContador(contMovimientos, contador_movimientos);
+
+	console.log(mazoInicial)
+	cargarTapeteInicial(mazoInicial);
 }
